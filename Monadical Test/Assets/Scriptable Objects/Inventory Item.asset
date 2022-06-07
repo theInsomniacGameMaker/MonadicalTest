@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e8e46d6c108f4dfcbad0506c8e0738e, type: 3}
   m_Name: Inventory Item
   m_EditorClassIdentifier: 
-  id: tester1
-  name: Tester 1
+  id: i1
+  itemName: Item
   icon: {fileID: 21300000, guid: 2ae7af08622e24b9f8888d946e54b884, type: 3}

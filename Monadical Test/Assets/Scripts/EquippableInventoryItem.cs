@@ -4,7 +4,7 @@ public class EquippableInventoryItem : InventoryItem
 
     public EquippableInventoryItem(EquippableItemData _data) : base(_data)
     {
-        Data = _data;
+        data = _data;
     }
 
     public Stats GetStats()

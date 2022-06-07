@@ -10,13 +10,15 @@ public class PlayerInventory : MonoBehaviour
     private PlayerStatManager playerStatManager;
     
     public event Action<InventoryItem> ItemAdded;
-    public event Action<InventoryItem> ItemRemoved; 
-    //Add a max count fot the inventory
-    
-    public void AddToInventory(ItemData itemData)
-    {
-        //Check for max count
+    public event Action<InventoryItem> ItemRemoved;
 
+    private void Awake()
+    {
+        playerStatManager = GetComponent<PlayerStatManager>();
+    }
+
+    public void AddToInventory(ItemData itemData, bool addingFromEquippedItems = false)
+    {
         InventoryItem inventoryItem;
         if (allItems.ContainsKey(itemData.id))
         {
@@ -32,16 +34,38 @@ public class PlayerInventory : MonoBehaviour
         ItemAdded?.Invoke(inventoryItem);
     }
 
+    public void RemoveFromInventory(ItemData itemData, bool addingToEquippedItems = false)
+    {
+        if (allItems.ContainsKey(itemData.id))
+        {
+            InventoryItem inventoryItem = allItems[itemData.id];
+            if (inventoryItem.stackCount > 0)
+            {
+                inventoryItem.RemoveFromStack();
+                ItemRemoved?.Invoke(inventoryItem);
+            }
+        }
+        else
+        {
+            Debug.LogError("Trying to remove an item that isn't  in the inventory.");
+        }
+    }
+
     public void EquipItem(EquippableInventoryItem item)
     {
-        playerStatManager.EquipItem(item);
+        if (playerStatManager.EquipItem(item))
+        {
+            RemoveFromInventory(item.Data);
+        }
     }
 
     public void UnequipItem(EquippableInventoryItem item)
     {
-        playerStatManager.UnequipItem(item);
-
+        if (playerStatManager.UnequipItem(item))
+        {
+            AddToInventory(item.Data);
+        }
     }
-    
-    
+
+
 }

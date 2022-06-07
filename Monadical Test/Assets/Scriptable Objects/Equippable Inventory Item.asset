@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517ea03a70b894a67887cdfc91ab3e70, type: 3}
   m_Name: Equippable Inventory Item
   m_EditorClassIdentifier: 
-  id: tester2
-  name: Tester 2
+  id: eitem1
+  itemName: E Item
   icon: {fileID: 21300000, guid: fa57f9d6aae614bf097e4518776e6b4c, type: 3}
   modifiers:
     health: 33
