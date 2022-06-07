@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class PlayerStatManager : MonoBehaviour
 {
-    [SerializeField] private Stats maxValues;
+    [SerializeField] private PlayerClass playerClass;
 
+    private Stats maxValues;
     private Stats currentValues;
 
     private HashSet<EquippableInventoryItem> equippedItems = new HashSet<EquippableInventoryItem>();
@@ -36,6 +37,7 @@ public class PlayerStatManager : MonoBehaviour
 
     private void Awake()
     {
+        MaxValues = playerClass.stats;
         CurrentValues = MaxValues;
     }
 
