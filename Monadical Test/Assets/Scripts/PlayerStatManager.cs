@@ -1,24 +1,40 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
-
-[System.Serializable]
-public struct Stats
-{
-    public int health;
-    public int mana;
-    public int endurance;
-    public int intelligence;
-}
 
 public class PlayerStatManager : MonoBehaviour
 {
     [SerializeField] private Stats maxValues;
 
     private Stats currentValues;
-    
+
+    private HashSet<EquippableInventoryItem> equippedItems;
+
+    public Stats CurrentValues
+    {
+        get => currentValues;
+        set => currentValues = value;
+    }
+
+    public Stats MaxValues
+    {
+        get => maxValues;
+        set => maxValues = value;
+    }
+
     private void Awake()
     {
-        currentValues = maxValues;
+        CurrentValues = MaxValues;
+    }
+
+    public void EquipItem(EquippableInventoryItem item)
+    {
+        MaxValues += item.GetStats();
+    }
+
+    public void UnequipItem(EquippableInventoryItem item)
+    {
+        MaxValues -= item.GetStats();
     }
     
     

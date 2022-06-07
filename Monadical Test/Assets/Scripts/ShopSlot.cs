@@ -19,7 +19,7 @@ public class ShopSlot : MonoBehaviour
         itemData = _itemData;
         shopReference = shopUI;
         iconImage.sprite = itemData.icon;
-        nameText.name = itemData.name;
+        nameText.text = itemData.itemName;
         addButton.onClick.AddListener(AddButtonPressed);
         
     }

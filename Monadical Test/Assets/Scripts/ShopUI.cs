@@ -16,8 +16,8 @@ public class ShopUI : MonoBehaviour
    {
       foreach (ItemData item in items)
       {
-          var temp = Instantiate(shopSlotPrefab, this.transform).GetComponent<ShopSlot>();
-          temp.Initialize(item, this);
+          ShopSlot newSlot = Instantiate(shopSlotPrefab, this.transform).GetComponent<ShopSlot>();
+          newSlot.Initialize(item, this);
       }
    }
 

@@ -6,6 +6,12 @@ using UnityEngine;
 public class ItemData : ScriptableObject
 {
     public string id;
-    public string name;
+    public string itemName;
     public Sprite icon;
+
+
+    public virtual InventoryItem CreateItem()
+    {
+        return new InventoryItem(this);
+    }
 }

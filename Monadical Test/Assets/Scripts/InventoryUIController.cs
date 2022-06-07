@@ -3,23 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryUIController : MonoBehaviour
 {
     [SerializeField] private GameObject inventorySlotPrefab;
+    [SerializeField] private GameObject layoutPanel;
+    [SerializeField] private RectTransform slotSelector;
+    [SerializeField] private Button equipButton;
+    [SerializeField] private Button unequipButton;
 
     [Header("References")]
     [SerializeField] private PlayerInventory playerInventory;
     
-    
     private Dictionary<InventorySlot, InventoryItem> slots;
-    
-    
+    private InventorySlot selectedSlot;
     
     private void Awake()
     {
         playerInventory.ItemAdded += PlayerInventoryItemAdded;
         slots = new Dictionary<InventorySlot, InventoryItem>();
+        equipButton.onClick.AddListener(EquipItem);
+        unequipButton.onClick.AddListener(UnequipItem);
     }
 
     private void PlayerInventoryItemAdded(InventoryItem inventoryItem)
@@ -33,14 +38,36 @@ public class InventoryUIController : MonoBehaviour
         {
             InventorySlot newSlot = CreateNewInventorySlot();
             slots.Add(newSlot, inventoryItem);
-            newSlot.Initialize(inventoryItem);
+            newSlot.Initialize(inventoryItem, this);
         }
     }
 
 
-    //This should be using object pooling. 
     private InventorySlot CreateNewInventorySlot()
     {
-        return Instantiate(inventorySlotPrefab, this.transform).GetComponent<InventorySlot>();
+        //This should be using object pooling. 
+        return Instantiate(inventorySlotPrefab, layoutPanel.transform).GetComponent<InventorySlot>();
+    }
+
+    public void SelectSlot(InventorySlot slot)
+    {
+        selectedSlot = slot;
+        slotSelector.position = slot.transform.position;
+    }
+
+    public void EquipItem()
+    {
+        if (slots[selectedSlot] is EquippableInventoryItem item)
+        {
+            playerInventory.EquipItem(item);
+        }
+    }
+    
+    public void UnequipItem()
+    {
+        if (slots[selectedSlot] is EquippableInventoryItem item)
+        {
+            playerInventory.UnequipItem(item);
+        }
     }
 }

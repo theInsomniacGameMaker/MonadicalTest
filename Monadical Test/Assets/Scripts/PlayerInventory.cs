@@ -7,6 +7,8 @@ public class PlayerInventory : MonoBehaviour
 {
     private Dictionary<string, InventoryItem> allItems = new Dictionary<string, InventoryItem>();
 
+    private PlayerStatManager playerStatManager;
+    
     public event Action<InventoryItem> ItemAdded;
     public event Action<InventoryItem> ItemRemoved; 
     //Add a max count fot the inventory
@@ -23,11 +25,22 @@ public class PlayerInventory : MonoBehaviour
         }
         else
         {
-            inventoryItem = new InventoryItem(itemData);
+            inventoryItem = itemData.CreateItem();
             allItems.Add(itemData.id, inventoryItem);
         }
 
         ItemAdded?.Invoke(inventoryItem);
+    }
+
+    public void EquipItem(EquippableInventoryItem item)
+    {
+        playerStatManager.EquipItem(item);
+    }
+
+    public void UnequipItem(EquippableInventoryItem item)
+    {
+        playerStatManager.UnequipItem(item);
+
     }
     
     

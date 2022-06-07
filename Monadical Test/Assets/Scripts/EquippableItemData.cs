@@ -6,4 +6,9 @@ using UnityEngine;
 public class EquippableItemData : ItemData
 {
    public Stats modifiers;
+
+   public override InventoryItem CreateItem()
+   {
+      return new EquippableInventoryItem(this);
+   }
 }
